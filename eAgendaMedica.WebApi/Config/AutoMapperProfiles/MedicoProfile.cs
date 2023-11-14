@@ -1,6 +1,8 @@
-﻿namespace eAgendaMedica.WebApi.Config.AutoMapperProfiles
+﻿using AutoMapper;
+
+namespace eAgendaMedica.WebApi.Config.AutoMapperProfiles
 {
-    public class MedicoProfile
+    public class MedicoProfile : Profile
     {
     }
 }
