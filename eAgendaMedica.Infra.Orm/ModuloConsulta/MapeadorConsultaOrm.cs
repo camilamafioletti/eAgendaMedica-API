@@ -21,7 +21,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloConsulta
                 .IsRequired();
 
             builder.Property(x => x.HoraTermino)
-                .IsRequired(false);
+                .IsRequired();
 
             builder.HasOne(x => x.Medico)
                 .WithMany(x => x.Consultas)

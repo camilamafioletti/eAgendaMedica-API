@@ -20,7 +20,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloCirurgia
                 .IsRequired();
 
             builder.Property(x => x.HoraTermino)
-                .IsRequired(false);
+                .IsRequired();
         }
     }
 }
