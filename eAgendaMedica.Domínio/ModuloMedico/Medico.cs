@@ -20,7 +20,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             Crm = crm;
             Nome = nome;
             Telefone = telefone;
-            Disponibilidade = disponibilidade;
+            Disponibilidade = true;
         }
     }
 }
