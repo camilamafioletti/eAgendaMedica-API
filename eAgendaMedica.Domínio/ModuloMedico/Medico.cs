@@ -23,7 +23,4 @@ namespace eAgendaMedica.Dominio.ModuloMedico
             Disponibilidade = disponibilidade;
         }
     }
-
-
-
 }
