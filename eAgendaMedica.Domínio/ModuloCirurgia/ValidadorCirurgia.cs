@@ -13,12 +13,7 @@ namespace eAgendaMedica.Dominio.ModuloCirurgia
             .NotNull().NotEmpty();
 
             RuleFor(x => x.HoraTermino)
-            .NotNull()
-            .NotEmpty();
-
-            RuleFor(x => x.Medicos)
-            .NotNull().NotEmpty().WithMessage("A cirurgia deve ter pelo menos um médico.")
-            .Must(medicos => medicos != null && medicos.Count > 0).WithMessage("A cirurgia deve ter pelo menos um médico.");
+            .NotNull().NotEmpty();
         }
     }
 }

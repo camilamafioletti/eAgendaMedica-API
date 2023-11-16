@@ -12,10 +12,12 @@ namespace eAgendaMedica.Dominio.ModuloCirurgia
 
         public Cirurgia() { }
 
-        public Cirurgia(string titulo, TimeSpan horaInicio)
+        public Cirurgia(string titulo, TimeSpan horaInicio, TimeSpan horaTermino, List<Medico> medicos)
         {
             Titulo = titulo;
             HoraInicio = horaInicio;
+            HoraTermino = horaTermino;
+            Medicos = medicos;
         }
     }
 }
