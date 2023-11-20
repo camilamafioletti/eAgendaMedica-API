@@ -92,7 +92,9 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Disponibilidade")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Nome")
                         .IsRequired()

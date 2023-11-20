@@ -1,4 +1,6 @@
-﻿namespace eAgendaMedica.WebApi.ViewModels.ModuloConsulta
+﻿using eAgendaMedica.WebApi.ViewModels.ModuloMedico;
+
+namespace eAgendaMedica.WebApi.ViewModels.ModuloConsulta
 {
     public class VisualizarConsultaViewModel
     {
@@ -6,6 +8,11 @@
         public string Titulo { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraTermino { get; set; }
-        public Guid MedicoId { get; set; }
+        public ListarMedicoViewModel Medico { get; set; }
+
+        public VisualizarConsultaViewModel()
+        {
+            Medico = new ListarMedicoViewModel();
+        }
     }
 }

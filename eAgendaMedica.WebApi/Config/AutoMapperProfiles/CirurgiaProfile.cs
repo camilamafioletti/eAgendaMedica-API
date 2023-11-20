@@ -35,7 +35,7 @@ namespace eAgendaMedicaApi.Config.AutomapperConfig
 
         public void Process(FormsCirurgiaViewModel source, Cirurgia destination, ResolutionContext context)
         {
-            destination.Medicos = repositorioMedico.SelecionarMuitos(source.MedicosSelecionados);
+            destination.Medicos.AddRange(repositorioMedico.SelecionarMuitos(source.MedicosSelecionados));
         }
     }
 }

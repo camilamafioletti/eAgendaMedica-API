@@ -9,6 +9,7 @@
         TEntidade SelecionarPorId(Guid id);
 
         Task<TEntidade> SelecionarPorIdAsync(Guid id);
+
         Task<List<TEntidade>> SelecionarTodosAsync();
     }
 

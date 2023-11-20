@@ -1,7 +1,6 @@
-﻿using eAgendaMedica.Dominio.ModuloConsulta;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using eAgendaMedica.Dominio.ModuloMedico;
 using Microsoft.EntityFrameworkCore;
-using eAgendaMedica.Dominio.ModuloMedico;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace eAgendaMedica.Infra.Orm.ModuloMedico
 {
@@ -24,13 +23,12 @@ namespace eAgendaMedica.Infra.Orm.ModuloMedico
                 .IsRequired();
 
             builder.Property(x => x.Disponibilidade)
-                .IsRequired();
+                .HasDefaultValue(true).IsRequired();
 
 
             builder.HasMany(x => x.Cirurgias)
                 .WithMany(x => x.Medicos)
                 .UsingEntity(x => x.ToTable("TBMedico_TBCirurgia"));
         }
-
     }
 }

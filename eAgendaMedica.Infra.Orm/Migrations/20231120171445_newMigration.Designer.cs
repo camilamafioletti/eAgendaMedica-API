@@ -12,8 +12,8 @@ using eAgendaMedica.Infra.Orm.Compartilhado;
 namespace eAgendaMedica.Infra.Orm.Migrations
 {
     [DbContext(typeof(eAgendaMedicaDbContext))]
-    [Migration("20231114142958_firstMigration")]
-    partial class firstMigration
+    [Migration("20231120171445_newMigration")]
+    partial class newMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,7 +95,9 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Disponibilidade")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Nome")
                         .IsRequired()

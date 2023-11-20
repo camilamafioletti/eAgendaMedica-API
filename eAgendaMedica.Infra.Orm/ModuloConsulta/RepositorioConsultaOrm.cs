@@ -13,7 +13,13 @@ namespace eAgendaMedica.Infra.Orm.ModuloConsulta
 
         public override async Task<Consulta> SelecionarPorIdAsync(Guid id)
         {
-            return await registros.Include(x => x.Medico).SingleOrDefaultAsync(x => x.Id == id);
+            return await registros.Include(x => x.Medico)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public override async Task<List<Consulta>> SelecionarTodosAsync()
+        {
+            return await registros.Include(x => x.Medico).ToListAsync();
         }
     }
 }
