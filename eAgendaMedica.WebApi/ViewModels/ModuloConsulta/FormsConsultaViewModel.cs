@@ -7,7 +7,7 @@
         public TimeSpan HoraTermino { get; set; }
         public Guid MedicoId { get; set; }
 
-        public FormsConsultaViewModel(Guid medicoId)
+        public FormsConsultaViewModel()
         {
             MedicoId = new Guid();
         }

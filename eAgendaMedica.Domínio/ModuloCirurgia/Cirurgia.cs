@@ -10,7 +10,10 @@ namespace eAgendaMedica.Dominio.ModuloCirurgia
         public TimeSpan HoraTermino { get; set; }
         public List<Medico> Medicos { get; set; }
 
-        public Cirurgia() { }
+        public Cirurgia() 
+        { 
+            Medicos = new List<Medico>();   
+        }
 
         public Cirurgia(string titulo, TimeSpan horaInicio, TimeSpan horaTermino, List<Medico> medicos)
         {

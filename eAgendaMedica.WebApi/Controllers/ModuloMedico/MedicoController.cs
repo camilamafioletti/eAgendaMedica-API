@@ -56,10 +56,10 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloMedico
         {
             var medico = mapeador.Map<Medico>(viewModel);
 
-            var categoriaResult = await servicoMedico.InserirAsync(medico);
+            var medicoResult = await servicoMedico.InserirAsync(medico);
 
-            if (categoriaResult.IsFailed)
-                return BadRequest(categoriaResult.Errors);
+            if (medicoResult.IsFailed)
+                return BadRequest(medicoResult.Errors);
 
             return Ok(viewModel);
         }
@@ -71,17 +71,17 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloMedico
         [ProducesResponseType(typeof(string[]), 500)]
         public async Task<IActionResult> Editar(Guid id, FormsMedicoViewModel viewModel)
         {
-            var selecaoCategoriaResult = await servicoMedico.SelecionarPorIdAsync(id);
+            var selecaoMedicoResult = await servicoMedico.SelecionarPorIdAsync(id);
 
-            if (selecaoCategoriaResult.IsFailed)
-                return NotFound(selecaoCategoriaResult.Errors);
+            if (selecaoMedicoResult.IsFailed)
+                return NotFound(selecaoMedicoResult.Errors);
 
-            var categoria = mapeador.Map(viewModel, selecaoCategoriaResult.Value);
+            var medico = mapeador.Map(viewModel, selecaoMedicoResult.Value);
 
-            var categoriaResult = await servicoMedico.EditarAsync(categoria);
+            var medicoResult = await servicoMedico.EditarAsync(medico);
 
-            if (categoriaResult.IsFailed)
-                return BadRequest(categoriaResult.Errors);
+            if (medicoResult.IsFailed)
+                return BadRequest(medicoResult.Errors);
 
             return Ok(viewModel);
         }
@@ -92,10 +92,10 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloMedico
         [ProducesResponseType(typeof(string[]), 500)]
         public async Task<IActionResult> Excluir(Guid id)
         {
-            var categoriaResult = await servicoMedico.ExcluirAsync(id);
+            var medicoResult = await servicoMedico.ExcluirAsync(id);
 
-            if (categoriaResult.IsFailed)
-                return NotFound(categoriaResult.Errors);
+            if (medicoResult.IsFailed)
+                return NotFound(medicoResult.Errors);
 
             return Ok();
         }
