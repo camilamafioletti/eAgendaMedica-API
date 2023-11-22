@@ -1,26 +1,33 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Dominio.ModuloCirurgia;
+using eAgendaMedica.Domínio.ModuloCirurgia;
 using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.WebApi.ViewModels.ModuloCirurgia;
 
-namespace eAgendaMedicaApi.Config.AutomapperConfig
+namespace E_AgendaMedicaApi.Config.AutomapperConfig
 {
     public class CirurgiaProfile : Profile
     {
         public CirurgiaProfile()
         {
-            CreateMap<Cirurgia, ListarCirurgiaViewModel>();
+            CreateMap<Cirurgia, ListarCirurgiaViewModel>()
+            .ForMember(destino => destino.HoraInicio, opt => opt.MapFrom(origem => origem.HoraInicio.ToString(@"hh\:mm")))
+            .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")));
 
             CreateMap<Cirurgia, VisualizarCirurgiaViewModel>()
                 .ForMember(destino => destino.HoraInicio, opt => opt.MapFrom(origem => origem.HoraInicio.ToString(@"hh\:mm")))
-                .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")))
-                .ForMember(destino => destino.Medicos, opt => opt.Ignore());
+                .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")));
 
             CreateMap<FormsCirurgiaViewModel, Cirurgia>()
                 .ForMember(destino => destino.HoraInicio, opt => opt.MapFrom(origem => origem.HoraInicio.ToString(@"hh\:mm")))
                 .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")))
                 .ForMember(destino => destino.Medicos, opt => opt.Ignore())
                 .AfterMap<FormsCirurgiaMappingAction>();
+
+            CreateMap<Cirurgia, FormsCirurgiaViewModel>()
+                .ForMember(destino => destino.HoraInicio, opt => opt.MapFrom(origem => origem.HoraInicio.ToString(@"hh\:mm")))
+                .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")))
+                .ForMember(destino => destino.MedicosSelecionados, opt => opt.MapFrom(origem => origem.Medicos));
         }
     }
 
@@ -33,9 +40,20 @@ namespace eAgendaMedicaApi.Config.AutomapperConfig
             this.repositorioMedico = repositorioMedico;
         }
 
-        public void Process(FormsCirurgiaViewModel source, Cirurgia destination, ResolutionContext context)
+        public void Process(FormsCirurgiaViewModel viewModel, Cirurgia cirurgia, ResolutionContext context)
         {
-            destination.Medicos.AddRange(repositorioMedico.SelecionarMuitos(source.MedicosSelecionados));
+            foreach (var medicoVM in viewModel.MedicosSelecionados)
+            {
+                if (medicoVM.Status == StatusMedicoCirurgia.Adicionado)
+                {
+                    var medico = repositorioMedico.SelecionarPorId(medicoVM.Id);
+                    cirurgia.AdicionarMedico(medico);
+                }
+                else if (medicoVM.Status == StatusMedicoCirurgia.Removido)
+                {
+                    cirurgia.RemoverMedico(medicoVM.Id);
+                }
+            }
         }
     }
 }

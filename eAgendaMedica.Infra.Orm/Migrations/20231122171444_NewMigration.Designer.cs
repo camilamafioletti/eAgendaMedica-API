@@ -12,8 +12,8 @@ using eAgendaMedica.Infra.Orm.Compartilhado;
 namespace eAgendaMedica.Infra.Orm.Migrations
 {
     [DbContext(typeof(eAgendaMedicaDbContext))]
-    [Migration("20231120171445_newMigration")]
-    partial class newMigration
+    [Migration("20231122171444_NewMigration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
