@@ -32,6 +32,11 @@ namespace NoteKeeper.WebApi
             builder.Services.ConfigurarInjecaoDependencia(builder.Configuration);
             builder.Services.ConfigurarSwagger();
 
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy("Desenvolvimento", servicos => servicos.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             builder.Services.ConfigurarControllers();
 
             var app = builder.Build();
@@ -44,6 +49,8 @@ namespace NoteKeeper.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("Desenvolvimento");
 
             app.UseHttpsRedirection();
 

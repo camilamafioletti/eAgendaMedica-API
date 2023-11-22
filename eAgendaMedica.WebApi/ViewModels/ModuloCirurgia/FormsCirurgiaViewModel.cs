@@ -7,11 +7,11 @@ namespace eAgendaMedica.WebApi.ViewModels.ModuloCirurgia
         public string Titulo { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraTermino { get; set; }
-        public List<SelecaoMedicoViewModel> MedicosSelecionados { get; set; }
+        public List<Guid> MedicosSelecionados { get; set; }
 
         public FormsCirurgiaViewModel()
         {
-            MedicosSelecionados = new List<SelecaoMedicoViewModel>();
+            MedicosSelecionados = new List<Guid>();
         }
     }
 }

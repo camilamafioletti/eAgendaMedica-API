@@ -1,6 +1,4 @@
-﻿using eAgendaMedica.Domínio.ModuloCirurgia;
-
-namespace eAgendaMedica.WebApi.ViewModels.ModuloMedico
+﻿namespace eAgendaMedica.WebApi.ViewModels.ModuloMedico
 {
     public class ListarMedicoViewModel
     {
@@ -8,6 +6,5 @@ namespace eAgendaMedica.WebApi.ViewModels.ModuloMedico
         public string Nome { get; set; }
         public string Telefone { get; set; }
         public bool Disponibilidade { get; set; }
-        public StatusMedicoCirurgia Status { get; set; }
     }
 }

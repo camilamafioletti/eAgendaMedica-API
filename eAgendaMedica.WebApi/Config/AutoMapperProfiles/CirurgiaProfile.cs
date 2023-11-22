@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Dominio.ModuloCirurgia;
-using eAgendaMedica.Domínio.ModuloCirurgia;
 using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.WebApi.ViewModels.ModuloCirurgia;
 
@@ -27,7 +26,8 @@ namespace E_AgendaMedicaApi.Config.AutomapperConfig
             CreateMap<Cirurgia, FormsCirurgiaViewModel>()
                 .ForMember(destino => destino.HoraInicio, opt => opt.MapFrom(origem => origem.HoraInicio.ToString(@"hh\:mm")))
                 .ForMember(destino => destino.HoraTermino, opt => opt.MapFrom(origem => origem.HoraTermino.ToString(@"hh\:mm")))
-                .ForMember(destino => destino.MedicosSelecionados, opt => opt.MapFrom(origem => origem.Medicos));
+                .ForMember(destino => destino.MedicosSelecionados, opt => opt.Ignore())
+                .AfterMap<FormsCirurgiaMappingActionInverso>();
         }
     }
 
@@ -42,18 +42,22 @@ namespace E_AgendaMedicaApi.Config.AutomapperConfig
 
         public void Process(FormsCirurgiaViewModel viewModel, Cirurgia cirurgia, ResolutionContext context)
         {
-            foreach (var medicoVM in viewModel.MedicosSelecionados)
-            {
-                if (medicoVM.Status == StatusMedicoCirurgia.Adicionado)
-                {
-                    var medico = repositorioMedico.SelecionarPorId(medicoVM.Id);
-                    cirurgia.AdicionarMedico(medico);
-                }
-                else if (medicoVM.Status == StatusMedicoCirurgia.Removido)
-                {
-                    cirurgia.RemoverMedico(medicoVM.Id);
-                }
-            }
+            cirurgia.Medicos = repositorioMedico.SelecionarMuitos(viewModel.MedicosSelecionados);
+        }
+    }
+
+    public class FormsCirurgiaMappingActionInverso : IMappingAction<Cirurgia, FormsCirurgiaViewModel>
+    {
+        private readonly IRepositorioMedico repositorioMedico;
+
+        public FormsCirurgiaMappingActionInverso(IRepositorioMedico repositorioMedico)
+        {
+            this.repositorioMedico = repositorioMedico;
+        }
+
+        public void Process(Cirurgia destination, FormsCirurgiaViewModel source, ResolutionContext context)
+        {
+            source.MedicosSelecionados = repositorioMedico.SelecionarMuitos(destination.Medicos);
         }
     }
 }
