@@ -10,7 +10,6 @@ using eAgendaMedica.Infra.Orm.Compartilhado;
 using eAgendaMedica.Infra.Orm.ModuloCirurgia;
 using eAgendaMedica.Infra.Orm.ModuloConsulta;
 using eAgendaMedica.Infra.Orm.ModuloMedico;
-using eAgendaMedica.WebApi.Config.AutoMapperProfiles;
 using Microsoft.EntityFrameworkCore;
 
 namespace eAgendaMedica.WebApi.Config

@@ -15,7 +15,7 @@ namespace NoteKeeper.WebApi
 
             builder.Services.Configure<ApiBehaviorOptions>(config =>
             {
-                config.SuppressModelStateInvalidFilter = true;
+                config.SuppressModelStateInvalidFilter = false;
             });
 
             builder.Services.AddSwaggerGen(c =>

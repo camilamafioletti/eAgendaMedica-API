@@ -14,9 +14,6 @@ namespace eAgendaMedica.Dominio.ModuloConsulta
 
             RuleFor(x => x.HoraTermino)
             .NotNull().NotEmpty();
-
-            //RuleFor(x => x.Medico)
-            //.NotNull().NotEmpty();
         }
     }
 }
