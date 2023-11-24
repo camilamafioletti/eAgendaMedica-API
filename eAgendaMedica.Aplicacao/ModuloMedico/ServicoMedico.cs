@@ -45,12 +45,12 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
 
         public async Task<Result> ExcluirAsync(Guid id)
         {
-            var cirurgia = await repositorioMedico.SelecionarPorIdAsync(id);
+            var medico = await repositorioMedico.SelecionarPorIdAsync(id);
 
-            if (cirurgia == null)
+            if (medico == null)
                 return Result.Fail($"Medico {id} não encontrado");
 
-            repositorioMedico.Excluir(cirurgia);
+            repositorioMedico.Excluir(medico);
 
             await contextoPersistencia.GravarAsync();
 

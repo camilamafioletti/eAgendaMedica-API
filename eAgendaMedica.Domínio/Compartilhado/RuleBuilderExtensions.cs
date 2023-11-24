@@ -11,5 +11,13 @@ namespace eAgendaMedica.Domínio.Compartilhado
 
             return options;
         }
+
+        public static IRuleBuilder<T, string> CrmMedico<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            var options = ruleBuilder
+                .Matches(@"^\d{5}-[A-Za-z]{2}$");
+
+            return options;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloMedico
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicoController : ControllerBase
+    public class MedicoController : ApiControllerBase
     {
         private ServicoMedico servicoMedico;
         private IMapper mapeador;

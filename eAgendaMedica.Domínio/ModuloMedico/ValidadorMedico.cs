@@ -11,10 +11,12 @@ namespace eAgendaMedica.Dominio.ModuloMedico
                .NotNull().NotEmpty();
 
             RuleFor(x => x.Crm)
+               .CrmMedico()
                .NotNull().NotEmpty();
 
             RuleFor(x => x.Telefone)
-               .Telefone();
+               .Telefone()
+               .NotNull().NotEmpty(); 
         }
     }
 }
