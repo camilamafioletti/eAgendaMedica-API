@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Aplicacao.ModuloMedico;
 using eAgendaMedica.Dominio.ModuloMedico;
+using eAgendaMedica.WebApi.ViewModels.ModuloCirurgia;
+using eAgendaMedica.WebApi.ViewModels.ModuloConsulta;
 using eAgendaMedica.WebApi.ViewModels.ModuloMedico;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +45,38 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloMedico
                 return NotFound(medicoResult.Errors);
 
             var viewModel = mapeador.Map<VisualizarMedicoViewModel>(medicoResult.Value);
+
+            return Ok(viewModel);
+        }
+
+        [HttpGet("visualizar-medico-consultas/{id}")]
+        [ProducesResponseType(typeof(List<ListarConsultaViewModel>), 200)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> SelecionarConsultasMedico(Guid id)
+        {
+            var consultasResult = await servicoMedico.SelecionarConsultasMedicoAsync(id);
+
+            if (consultasResult.IsFailed)
+                return NotFound(consultasResult.Errors);
+
+            var viewModel = mapeador.Map<List<ListarConsultaViewModel>>(consultasResult.Value);
+
+            return Ok(viewModel);
+        }
+
+        [HttpGet("visualizar-medico-cirurgias/{id}")]
+        [ProducesResponseType(typeof(List<ListarCirurgiaViewModel>), 200)]
+        [ProducesResponseType(typeof(string[]), 404)]
+        [ProducesResponseType(typeof(string[]), 500)]
+        public async Task<IActionResult> SelecionarCirurgiasMedico(Guid id)
+        {
+            var cirurgiasResult = await servicoMedico.SelecionarCirurgiasMedicoAsync(id);
+
+            if (cirurgiasResult.IsFailed)
+                return NotFound(cirurgiasResult.Errors);
+
+            var viewModel = mapeador.Map<List<ListarCirurgiaViewModel>>(cirurgiasResult.Value);
 
             return Ok(viewModel);
         }

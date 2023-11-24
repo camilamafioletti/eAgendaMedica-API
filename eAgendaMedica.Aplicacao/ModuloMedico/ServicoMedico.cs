@@ -1,18 +1,29 @@
 ﻿using eAgendaMedica.Dominio.Compartilhado;
+using eAgendaMedica.Dominio.ModuloCirurgia;
+using eAgendaMedica.Dominio.ModuloConsulta;
 using eAgendaMedica.Dominio.ModuloMedico;
 using FluentResults;
+using Serilog;
 
 namespace eAgendaMedica.Aplicacao.ModuloMedico
 {
     public class ServicoMedico
     {
-        private readonly IRepositorioMedico repositorioMedico;
-        private readonly IContextoPersistencia contextoPersistencia;
+        private IRepositorioMedico repositorioMedico;
+        private IRepositorioConsulta repositorioConsulta;
+        private IRepositorioCirurgia repositorioCirurgia;
+        private IContextoPersistencia contextoPersistencia;
 
-        public ServicoMedico(IRepositorioMedico repositorioMedico, IContextoPersistencia contextoPersistencia)
+        public ServicoMedico(
+            IRepositorioMedico repositorioMedico,
+            IRepositorioConsulta repositorioConsulta,
+            IRepositorioCirurgia repositorioCirurgia,
+            IContextoPersistencia contexto)
         {
             this.repositorioMedico = repositorioMedico;
-            this.contextoPersistencia = contextoPersistencia;
+            this.contextoPersistencia = contexto;
+            this.repositorioConsulta = repositorioConsulta;
+            this.repositorioCirurgia = repositorioCirurgia;
         }
 
         public async Task<Result<Medico>> InserirAsync(Medico medico)
@@ -86,6 +97,34 @@ namespace eAgendaMedica.Aplicacao.ModuloMedico
                 return Result.Fail(erros.ToArray());
 
             return Result.Ok();
+        }
+
+        public async Task<Result<List<Consulta>>> SelecionarConsultasMedicoAsync(Guid id)
+        {
+            var consultas = await repositorioConsulta.SelecionarConsultasMedico(id);
+
+            if (consultas == null)
+            {
+                Log.Logger.Warning($"Nenhuma Consulta encontrada");
+
+                return Result.Fail($"Nenhuma Consulta encontrada");
+            }
+
+            return Result.Ok(consultas);
+        }
+
+        public async Task<Result<List<Cirurgia>>> SelecionarCirurgiasMedicoAsync(Guid id)
+        {
+            var cirurgias = await repositorioCirurgia.SelecionarCirurgiasMedico(id);
+
+            if (cirurgias == null)
+            {
+                Log.Logger.Warning($"Nenhuma Cirurgia encontrada");
+
+                return Result.Fail($"Nenhuma Cirurgia encontrada");
+            }
+
+            return Result.Ok(cirurgias);
         }
     }
 }

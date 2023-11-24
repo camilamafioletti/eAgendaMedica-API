@@ -25,5 +25,10 @@ namespace eAgendaMedica.Infra.Orm.ModuloCirurgia
         {
             return await registros.Include(x => x.Medicos).ToListAsync();
         }
+
+        public async Task<List<Cirurgia>> SelecionarCirurgiasMedico(Guid id)
+        {
+            return await registros.Where(cirurgia => cirurgia.Medicos.Any(medico => medico.Id == id)).ToListAsync();
+        }
     }
 }

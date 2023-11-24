@@ -63,6 +63,7 @@ namespace eAgendaMedica.WebApi.Controllers.ModuloConsulta
             return Ok(viewModel);
         }
 
+
         [HttpPost]
         [ProducesResponseType(typeof(FormsConsultaViewModel), 200)]
         [ProducesResponseType(typeof(string[]), 400)]

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using eAgendaMedica.Aplicacao.ModuloCirurgia;
-using eAgendaMedica.Aplicacao.ModuloConsulta;
 using eAgendaMedica.Dominio.ModuloCirurgia;
 using eAgendaMedica.WebApi.ViewModels.ModuloCirurgia;
-using eAgendaMedica.WebApi.ViewModels.ModuloConsulta;
 using eAgendaMedica.WebApi.ViewModels.ModuloMedico;
 using Microsoft.AspNetCore.Mvc;
 

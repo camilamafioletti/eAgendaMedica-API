@@ -21,5 +21,10 @@ namespace eAgendaMedica.Infra.Orm.ModuloConsulta
         {
             return await registros.Include(x => x.Medico).ToListAsync();
         }
+
+        public async Task<List<Consulta>> SelecionarConsultasMedico(Guid id)
+        {
+            return await registros.Where(x => x.Medico.Id == id).ToListAsync();
+        }
     }
 }
