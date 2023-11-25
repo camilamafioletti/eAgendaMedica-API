@@ -84,18 +84,19 @@ namespace eAgendaMedica.TesteIntegracao.ModuloConsulta
         }
 
         [TestMethod]
-        public void Deve_selecionar_consulta_por_id()
+        public async Task Deve_selecionar_consulta_por_id()
         {
             // Arrange
             var medico = Builder<Medico>.CreateNew().Persist();
             var consulta = Builder<Consulta>.CreateNew().With(x => x.Medico = medico).Persist();
 
             // Act
-            var consultaEncontrada = repositorioConsulta.SelecionarPorId(consulta.Id);
+            var consultaEncontrada = await repositorioConsulta.SelecionarPorIdAsync(consulta.Id);
 
             // Assert
             consultaEncontrada.Should().Be(consulta);
             consultaEncontrada.Medico.Should().Be(medico);
         }
+
     }
 }

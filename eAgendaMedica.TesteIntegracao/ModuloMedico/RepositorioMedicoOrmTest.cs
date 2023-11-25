@@ -74,13 +74,13 @@ namespace eAgendaMedica.TesteIntegracao.ModuloMedico
         }
 
         [TestMethod]
-        public void Deve_selecionar_medico_por_id()
+        public async Task Deve_selecionar_medico_por_id()
         {
             // Arrange
             var medico = Builder<Medico>.CreateNew().Persist();
 
             // Act
-            var medicoEncontrado = repositorioMedico.SelecionarPorId(medico.Id);
+            var medicoEncontrado = await repositorioMedico.SelecionarPorIdAsync(medico.Id);
 
             // Assert
             medicoEncontrado.Should().Be(medico);

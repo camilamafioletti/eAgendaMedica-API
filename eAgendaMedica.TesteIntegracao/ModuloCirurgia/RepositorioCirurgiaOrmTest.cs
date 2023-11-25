@@ -73,16 +73,17 @@ namespace eAgendaMedica.TesteIntegracao.ModuloCirurgia
         }
 
         [TestMethod]
-        public void Deve_selecionar_cirurgia_por_id()
+        public async Task Deve_selecionar_cirurgia_por_id()
         {
             // Arrange
             var cirurgia = Builder<Cirurgia>.CreateNew().Persist();
 
             // Act
-            var cirurgiaEncontrada = repositorioCirurgia.SelecionarPorId(cirurgia.Id);
+            var cirurgiaEncontrada = await repositorioCirurgia.SelecionarPorIdAsync(cirurgia.Id);
 
             // Assert
             cirurgiaEncontrada.Should().Be(cirurgia);
         }
+
     }
 }
