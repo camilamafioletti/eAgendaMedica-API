@@ -1,7 +1,9 @@
 ﻿using eAgendaMedica.Dominio.Compartilhado;
+using eAgendaMedica.Dominio.ModuloCirurgia;
 using eAgendaMedica.Dominio.ModuloConsulta;
 using eAgendaMedica.Dominio.ModuloMedico;
 using eAgendaMedica.Infra.Orm.Compartilhado;
+using eAgendaMedica.Infra.Orm.ModuloCirurgia;
 using eAgendaMedica.Infra.Orm.ModuloConsulta;
 using eAgendaMedica.Infra.Orm.ModuloMedico;
 using FizzWare.NBuilder;
@@ -16,11 +18,13 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
     {
         protected IRepositorioMedico repositorioMedico;
         protected IRepositorioConsulta repositorioConsulta;
+        protected IRepositorioCirurgia repositorioCirurgia;
 
         protected IContextoPersistencia contextoPersistencia;
 
         public TestesIntegracaoBase()
         {
+
             string connectionString = ObterConnectionString();
 
             var optionsBuilder = new DbContextOptionsBuilder<eAgendaMedicaDbContext>();
@@ -32,6 +36,7 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
 
             repositorioMedico = new RepositorioMedicoOrm(dbContext);
             repositorioConsulta = new RepositorioConsultaOrm(dbContext);
+            repositorioCirurgia = new RepositorioCirurgiaOrm(dbContext);
 
 
             BuilderSetup.SetCreatePersistenceMethod<Medico>((Medico) =>
@@ -43,33 +48,24 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
                 }).GetAwaiter().GetResult();
             });
 
-            //BuilderSetup.SetCreatePersistenceMethod<Consulta>((Consulta) =>
-            //{
-            //    await repositorioConsulta.InserirAsync(Consulta);
-            //    await contextoPersistencia.GravarAsync();
-            //});
+            BuilderSetup.SetCreatePersistenceMethod<Consulta>((Consulta) =>
+            {
+                Task.Run(async () =>
+                {
+                    await repositorioConsulta.InserirAsync(Consulta);
+                    await contextoPersistencia.GravarAsync();
+                }).GetAwaiter().GetResult();
+            });
 
-
+            BuilderSetup.SetCreatePersistenceMethod<Cirurgia>((Cirurgia) =>
+            {
+                Task.Run(async () =>
+                {
+                    await repositorioCirurgia.InserirAsync(Cirurgia);
+                    await contextoPersistencia.GravarAsync();
+                }).GetAwaiter().GetResult();
+            });
         }
-
-        //protected static void LimparTabelas()
-        //{
-        //    string? connectionString = ObterConnectionString();
-
-        //    SqlConnection sqlConnection = new SqlConnection(connectionString);
-
-        //    string sqlLimpezaTabela =
-        //        @"
-        //        DELETE FROM [DBO].[TBALUGUEL]
-
-        //    SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
-
-        //    sqlConnection.Open();
-
-        //    comando.ExecuteNonQuery();
-
-        //    sqlConnection.Close();
-        //}
 
         protected static string ObterConnectionString()
         {
@@ -82,5 +78,4 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
             return connectionString;
         }
     }
-
 }
