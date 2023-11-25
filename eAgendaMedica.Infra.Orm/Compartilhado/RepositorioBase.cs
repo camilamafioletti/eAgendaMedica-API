@@ -38,7 +38,7 @@ namespace eAgendaMedica.Infra.Orm.Compartilhado
 
         public async virtual Task<TEntidade> SelecionarPorIdAsync(Guid id)
         {
-            return await registros.SingleOrDefaultAsync(x => x.Id == id);
+            return await Task.Run(() => registros.SingleOrDefaultAsync(x => x.Id == id));
         }
 
         public async virtual Task<List<TEntidade>> SelecionarTodosAsync()

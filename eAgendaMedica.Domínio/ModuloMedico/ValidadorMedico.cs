@@ -8,7 +8,7 @@ namespace eAgendaMedica.Dominio.ModuloMedico
         public ValidadorMedico()
         {
             RuleFor(x => x.Nome)
-               .NotNull().NotEmpty();
+               .NotNull().NotEmpty().MinimumLength(3).Matches("^[A-Za-zÀ-ÿ ]+$"); 
 
             RuleFor(x => x.Crm)
                .CrmMedico()

@@ -8,6 +8,7 @@ namespace eAgendaMedica.Aplicacao.ModuloConsulta
     {
         private readonly IRepositorioConsulta repositorioConsulta;
         private readonly IContextoPersistencia contextoPersistencia;
+        private readonly ValidadorConsulta validadorConsulta;
 
         public ServicoConsulta(IRepositorioConsulta repositorioConsulta, IContextoPersistencia contextoPersistencia)
         {
