@@ -23,6 +23,11 @@ namespace eAgendaMedica.Aplicacao.ModuloCirurgia
 
         public async Task<Result<Cirurgia>> InserirAsync(Cirurgia cirurgia)
         {
+            TimeSpan horarioLimite = new TimeSpan(19, 59, 0);
+
+            if (cirurgia.HoraTermino > horarioLimite)
+                return Result.Fail("O horário Término limite é 19:59");
+
             TimeSpan periodoDescanso = TimeSpan.FromHours(4);
 
             cirurgia.HoraTermino += periodoDescanso;

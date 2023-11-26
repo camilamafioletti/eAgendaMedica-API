@@ -23,6 +23,11 @@ namespace eAgendaMedica.Aplicacao.ModuloConsulta
 
         public async Task<Result<Consulta>> InserirAsync(Consulta consulta)
         {
+            TimeSpan horarioLimite = new TimeSpan(23, 30, 0);
+
+            if (consulta.HoraTermino > horarioLimite)
+                return Result.Fail("O horário Término limite é 23:30");
+
             TimeSpan periodoDescanso = TimeSpan.FromMinutes(20);
 
             consulta.HoraTermino += periodoDescanso;
