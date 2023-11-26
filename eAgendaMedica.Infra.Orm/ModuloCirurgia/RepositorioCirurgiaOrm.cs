@@ -31,6 +31,14 @@ namespace eAgendaMedica.Infra.Orm.ModuloCirurgia
             return await registros.Where(cirurgia => cirurgia.Medicos.Any(medico => medico.Id == id)).ToListAsync();
         }
 
+        public async Task<bool> ExisteCirurgiasNesseHorarioPorMedicoId(Guid medicoId, TimeSpan horaInicio, TimeSpan horaTermino, DateTime data)
+        {
+            TimeSpan periodoDescanso = TimeSpan.FromHours(4);
 
+            return await registros.Where(cirurgia => cirurgia.Medicos.Any(medico => medico.Id == medicoId))
+                .AnyAsync(x => ((horaInicio >= x.HoraInicio && horaInicio <= x.HoraTermino) && data.Date == x.Data.Date ||
+                (horaTermino >= x.HoraInicio && horaTermino <= x.HoraTermino) && data.Date == x.Data.Date) ||
+                (x.HoraInicio >= horaInicio && x.HoraTermino <= horaTermino) && data.Date == x.Data.Date);
+        }
     }
 }

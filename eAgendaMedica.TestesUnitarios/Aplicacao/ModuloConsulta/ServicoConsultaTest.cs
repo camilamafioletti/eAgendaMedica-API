@@ -1,5 +1,6 @@
 ﻿using eAgendaMedica.Aplicacao.ModuloConsulta;
 using eAgendaMedica.Dominio.Compartilhado;
+using eAgendaMedica.Dominio.ModuloCirurgia;
 using eAgendaMedica.Dominio.ModuloConsulta;
 using eAgendaMedica.Dominio.ModuloMedico;
 using FluentAssertions;
@@ -14,6 +15,7 @@ namespace eAgendaMedica.TestesUnitarios.Aplicacao.ModuloConsulta
     public class ServicoConsultaTest
     {
         Mock<IRepositorioConsulta> repositorioConsultaMoq;
+        Mock<IRepositorioCirurgia> repositorioCirurgiaMoq;
         Mock<ValidadorConsulta> validadorMoq;
         Mock<IContextoPersistencia> contextoMoq;
 
@@ -22,9 +24,10 @@ namespace eAgendaMedica.TestesUnitarios.Aplicacao.ModuloConsulta
         public ServicoConsultaTest()
         {
             repositorioConsultaMoq = new Mock<IRepositorioConsulta>();
+            repositorioCirurgiaMoq = new Mock<IRepositorioCirurgia>();
             validadorMoq = new Mock<ValidadorConsulta>();
             contextoMoq = new Mock<IContextoPersistencia>();
-            servicoConsulta = new ServicoConsulta(repositorioConsultaMoq.Object, contextoMoq.Object);
+            servicoConsulta = new ServicoConsulta(repositorioConsultaMoq.Object, repositorioCirurgiaMoq.Object, contextoMoq.Object);
         }
 
         [TestMethod]
@@ -32,7 +35,7 @@ namespace eAgendaMedica.TestesUnitarios.Aplicacao.ModuloConsulta
         {
             //arrange 
             Medico medico = new Medico();
-            var consulta = BuildConsulta("CirurgiaTeste", medico, TimeSpan.MinValue, TimeSpan.MaxValue);
+            var consulta = BuildConsulta("CirurgiaTeste", medico, TimeSpan.MinValue, TimeSpan.MinValue);
 
             //action
             Result<Consulta> resultado = await servicoConsulta.InserirAsync(consulta);

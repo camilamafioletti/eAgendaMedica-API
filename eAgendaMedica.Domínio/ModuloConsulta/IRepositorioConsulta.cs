@@ -6,6 +6,7 @@ namespace eAgendaMedica.Dominio.ModuloConsulta
     {
         public Task<List<Consulta>> SelecionarConsultasMedico(Guid id);
 
-        public Task<bool> ExisteConsultaNesseHorarioPorMedicoId(Consulta consulta);
+        public Task<bool> ExisteConsultaNesseHorarioPorMedicoId(Guid medicoId, TimeSpan horaInicio, TimeSpan horaTermino, DateTime data);
+
     }
 }

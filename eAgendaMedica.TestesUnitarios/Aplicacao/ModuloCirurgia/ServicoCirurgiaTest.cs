@@ -1,6 +1,7 @@
 ﻿using eAgendaMedica.Aplicacao.ModuloCirurgia;
 using eAgendaMedica.Dominio.Compartilhado;
 using eAgendaMedica.Dominio.ModuloCirurgia;
+using eAgendaMedica.Dominio.ModuloConsulta;
 using eAgendaMedica.Dominio.ModuloMedico;
 using FluentResults;
 using FluentResults.Extensions.FluentAssertions;
@@ -13,6 +14,7 @@ namespace AgendaMedica.TestesUnitarios.Aplicacao.ModuloCirurgia
     public class ServicoCirurgiaTest
     {
         Mock<IRepositorioCirurgia> repositorioCirurgiaMoq;
+        Mock<IRepositorioConsulta> repositorioConsultaMoq;
         Mock<ValidadorCirurgia> validadorMoq;
         Mock<IContextoPersistencia> contextoMoq;
 
@@ -21,9 +23,10 @@ namespace AgendaMedica.TestesUnitarios.Aplicacao.ModuloCirurgia
         public ServicoCirurgiaTest()
         {
             repositorioCirurgiaMoq = new Mock<IRepositorioCirurgia>();
+            repositorioConsultaMoq = new Mock<IRepositorioConsulta>();
             validadorMoq = new Mock<ValidadorCirurgia>();
             contextoMoq = new Mock<IContextoPersistencia>();
-            servicoCirurgia = new ServicoCirurgia(repositorioCirurgiaMoq.Object, contextoMoq.Object);
+            servicoCirurgia = new ServicoCirurgia(repositorioCirurgiaMoq.Object, repositorioConsultaMoq.Object, contextoMoq.Object);
         }
 
         [TestMethod]
@@ -31,7 +34,7 @@ namespace AgendaMedica.TestesUnitarios.Aplicacao.ModuloCirurgia
         {
             //arrange 
             Medico medico = new Medico();
-            var cirurgia = BuildCirurgia("CirurgiaTeste", medico, TimeSpan.MinValue, TimeSpan.MaxValue);
+            var cirurgia = BuildCirurgia("CirurgiaTeste", medico, TimeSpan.MinValue, TimeSpan.MinValue);
 
             //action
             Result<Cirurgia> resultado = await servicoCirurgia.InserirAsync(cirurgia);
