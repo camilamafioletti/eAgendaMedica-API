@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eAgendaMedica.Infra.Orm.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigration : Migration
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,6 +17,7 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HoraInicio = table.Column<TimeSpan>(type: "time", nullable: false),
                     HoraTermino = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
@@ -46,6 +47,7 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HoraInicio = table.Column<TimeSpan>(type: "time", nullable: false),
                     HoraTermino = table.Column<TimeSpan>(type: "time", nullable: false),
                     MedicoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

@@ -30,5 +30,7 @@ namespace eAgendaMedica.Infra.Orm.ModuloCirurgia
         {
             return await registros.Where(cirurgia => cirurgia.Medicos.Any(medico => medico.Id == id)).ToListAsync();
         }
+
+
     }
 }

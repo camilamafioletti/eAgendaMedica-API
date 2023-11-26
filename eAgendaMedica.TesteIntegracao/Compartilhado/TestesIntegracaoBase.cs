@@ -32,6 +32,11 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
             optionsBuilder.UseSqlServer(connectionString);
 
             var dbContext = new eAgendaMedicaDbContext(optionsBuilder.Options);
+
+            dbContext.Database.Migrate();
+
+            LimparTabelas();
+
             contextoPersistencia = dbContext;
 
             repositorioMedico = new RepositorioMedicoOrm(dbContext);
@@ -65,6 +70,32 @@ namespace eAgendaMedica.TestesIntegracao.Compartilhado
                     await contextoPersistencia.GravarAsync();
                 }).GetAwaiter().GetResult();
             });
+        }
+
+        protected static void LimparTabelas()
+        {
+            string? connectionString = ObterConnectionString();
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+            string sqlLimpezaTabela =
+                @"
+
+                DELETE FROM [DBO].[TBMEDICO_TBCIRURGIA]
+
+                DELETE FROM [DBO].[TBCIRURGIA]
+                
+                DELETE FROM [DBO].[TBCONSULTA]
+
+                DELETE FROM [DBO].[TBMEDICO];";
+
+            SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
+
+            sqlConnection.Open();
+
+            comando.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         protected static string ObterConnectionString()

@@ -18,6 +18,7 @@ namespace eAgendaMedica.Dominio.ModuloConsulta
             RuleFor(x => x.Titulo)
                 .MinimumLength(3)
                 .WithMessage("O título da consulta deve ter no mínimo 3 caracteres.");
+
         }
     }
 }

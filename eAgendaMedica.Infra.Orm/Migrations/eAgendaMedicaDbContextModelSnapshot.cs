@@ -42,6 +42,9 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");
 
@@ -61,6 +64,9 @@ namespace eAgendaMedica.Infra.Orm.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
 
                     b.Property<TimeSpan>("HoraInicio")
                         .HasColumnType("time");

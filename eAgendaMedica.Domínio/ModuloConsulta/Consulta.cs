@@ -6,6 +6,7 @@ namespace eAgendaMedica.Dominio.ModuloConsulta
     public class Consulta : Entidade
     {
         public string Titulo { get; set; }
+        public DateTime Data { get; set; }
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraTermino { get; set; }
         public Medico Medico { get; set; }
