@@ -15,9 +15,9 @@ namespace eAgendaMedica.Infra.Orm.Compartilhado
               .AddJsonFile("appsettings.json")
               .Build();
 
-            var connectionString = configuracao.GetConnectionString("SqlServer");
+            var connectionString = configuracao.GetConnectionString("PostgreSql");
 
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseNpgsql(connectionString);
 
             var dbContext = new eAgendaMedicaDbContext(optionsBuilder.Options);
 
